@@ -1,0 +1,17 @@
+---
+format: 
+  naletter-pdf:
+    fromname: Nelson Areal
+    fromtitle: Associate Professor
+    fromWWW: nelsonareal.net
+    fromemail: nareal@eeg.uminho.pt
+    fromphone: +351 253 601 923
+    toname: Helen of Troy
+    toaddress: University of Greece\newline Athens
+    opening: Dear Helen
+    closing: Best regards,
+    spacing: 1.4
+    sansfont: NewsGotT
+---
+
+I am writing to ask you to \dots
