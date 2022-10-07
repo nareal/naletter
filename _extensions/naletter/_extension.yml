@@ -4,4 +4,4 @@ version: 1.0.0
 contributes:
   format:
     pdf: 
-      template: mytemplate.tex
+      template: template.tex

@@ -79,18 +79,22 @@ $else$
 \geometry{a4paper, top=2cm, bottom=3cm, left=2cm, right=2cm}
 $endif$
 $if(lang)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
-$if(babel-newcommands)$
-  $babel-newcommands$
-$endif$
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
 \else
-  \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
-$for(polyglossia-otherlangs)$
-  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
-$endfor$
+\usepackage[bidi=default]{babel}
 \fi
+$if(babel-lang)$
+\babelprovide[main,import]{$babel-lang$}
+$endif$
+$for(babel-otherlangs)$
+\babelprovide[import]{$babel-otherlangs$}
+$endfor$
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\usepackage[useregional,showdow]{datetime2}
+\DTMlangsetup[$lang$]{abbr}
 $endif$
 $if(listings)$
 \usepackage{listings}
@@ -177,11 +181,15 @@ $endif$
 \setlength{\TPVertModule}{1cm}
 
 \newsavebox{\letterlogo}
-\newsavebox{\letterfooter}
+\newsavebox{\letterinstaddress}
 \newsavebox{\letterfrom}
 \newsavebox{\letterto}
 
+$if(logofilepath)$
+\sbox{\letterlogo}{\hbox{\includegraphics[]{$logofilepath$}}}
+$else$
 \sbox{\letterlogo}{\hbox{\includegraphics[]{_extensions/naletter/um-eeg}}}
+$endif$
 
 
 \newlength{\junkw}
@@ -196,7 +204,7 @@ $endif$
 \begin{textblock}{6}(10,6)
 \usebox{\letterto}
 \end{textblock}
-\begin{textblock}{10}(2,3.8)\usebox{\letterfooter}\end{textblock}\def\thepage{}}
+\begin{textblock}{10}(2,3.8)\usebox{\letterinstaddress}\end{textblock}\def\thepage{}}
 
 \@ifundefined{opening}{}{%
 \renewcommand*{\opening}[1]{\thispagestyle{eeg}%
@@ -207,13 +215,6 @@ $endif$
 
 \def\section#1{\vspace{0.3cm}\par{\textsf{\bfseries\Large #1}}\vspace*{0.02cm}\par}
 \def\subsection#1{\vspace{0.3cm}\par{\textsf{\bfseries\large #1}}\vspace*{0.02cm}\par} %}
-
-% Date
-\def\Date{\number\day}
-\def\Month{\ifcase\month\or
- January\or February\or March\or April\or May\or June\or
- July\or August\or September\or October\or November\or December\fi}
-\def\Year{\number\year}
 
 % Spacing
 \RequirePackage{setspace}
@@ -228,33 +229,49 @@ $header-includes$
 $endfor$
 
 \sbox{\letterfrom}{\parbox{10cm}{\fontsize{10}{12}\sffamily\color[gray]{0.4}
+$if(fromname)$
 {\large\textbf{$fromname$}}\\
+$endif$
+$if(fromtitle)$
 $fromtitle$\\[0.2cm]
+$endif$
 \begin{tabular}{@{}ll@{}}
+      $if(fromWWW)$
       \faGlobe       & $fromWWW$\\
+      $endif$
+      $if(fromemail)$
       \faEnvelope   & $fromemail$\\
+      $endif$
+      $if(fromphone)$
       \faPhone     & $fromphone$
+      $endif$
 \end{tabular}}}
 
 
 \sbox{\letterto}{\parbox{10cm}{\fontsize{10}{12}\sffamily
-{$toname$ \\ $toaddress$}}}
+{
+$if(toname)$
+  $toname$ \\ 
+$endif$  
+$if(toaddress)$
+  $toaddress$
+$endif$
+}}}
 
-
-\sbox{\letterfooter}{\hbox{\fontsize{9}{11}\sffamily\color[gray]{0.4}\begin{tabular}{@{}ll@{}}
-\multicolumn{2}{@{}l}{School of Economics and Management}\\
-\multicolumn{2}{@{}l}{University of Minho}\\
-\multicolumn{2}{@{}l}{Campus de Gualtar}\\
-\multicolumn{2}{@{}l}{4710-057 Braga - Portugal}\\
-\end{tabular}}}
+$if(fromaddress)$
+\sbox{\letterinstaddress}{\parbox{10cm}{\fontsize{9}{11}\sffamily\color[gray]{0.4}{$fromaddress$}}}
+$endif$
 
 $if(date)$
 \date{$date$}
 $else$
-\date{\Date~\Month~\Year}
+\date{\today}
 $endif$
 
 \begin{document}
+$if(lang)$
+\selectlanguage{$babel-lang$}
+$endif$
 \sf
 $for(include-before)$
 $include-before$
@@ -262,10 +279,20 @@ $endfor$
 \begin{letter}{$toname$\\$toaddress$}
 \setstretch{1}
 \vspace*{2cm}
+$if(opening)$
 \opening{$opening$}
+$endif$
+$if(spacing)$
 \setstretch{$spacing$}
+$endif$
 $body$
-\closing{$closing$\\[0.5cm]$fromname$}
+\closing{
+  $if(closing)$
+  $closing$\\[0.5cm]
+  $endif$
+  $if(fromname)$
+    $fromname$}
+  $endif$
 \end{letter}
 
 
