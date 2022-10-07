@@ -1,6 +1,6 @@
 # naletter
 
-This is a quarto extension to provide a PDF letter template. 
+This is a [Quarto](https://quarto.org/) extension to provide a PDF letter template. 
 
 ## Installation
 
