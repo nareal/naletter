@@ -8,7 +8,7 @@ format:
                  | Campus de Gualtar
                  | 4710-057 Braga - Portugal
     fromtitle: Associate Professor
-    fromWWW: nelsonareal.net
+    fromWWW: https://nelsonareal.net
     fromemail: nareal@eeg.uminho.pt
     fromphone: +351 253 601 923
     toname: Helen of Troy
