@@ -11,14 +11,14 @@ quarto use template nareal/naletter
 
 You just want to install the extension use:
 ```bash
-quarto install extension nareal/naletter
+quarto add nareal/naletter
 ```
 
 This command installs the extensions under the `_extension` subdirectory.
 
 If you want you can specify the version number:
 ```bash
-quarto install extension nareal/naletter@v1.0
+quarto add nareal/naletter@v1.0
 ```
 
 To update the extension use:
@@ -64,3 +64,7 @@ format:
     #logofilepath:  um-eeg
     #keep-tex: true
 ```
+
+## Example 
+
+Here is the source code of the template: [template.qmd](template.qmd) and the [rendered PDF file](https://nareal.github.io/naletter/example.html).
