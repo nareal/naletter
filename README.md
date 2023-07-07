@@ -67,4 +67,4 @@ format:
 
 ## Example 
 
-Here is the source code of the template: [template.qmd](template.qmd) and the [rendered PDF file](https://nareal.github.io/naletter/example.pdf).
+Here is the source code of the template: [template.qmd](template.qmd) and the [rendered PDF file](https://nareal.github.io/naletter/template.pdf).
