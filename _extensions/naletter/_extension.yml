@@ -1,6 +1,6 @@
 title: Letter
 autor: Nelson Areal
-version: 1.0.3
+version: 1.0.4
 contributes:
   format:
     pdf: 
