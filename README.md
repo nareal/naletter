@@ -1,5 +1,7 @@
 # naletter
 
+![GitHub Action Status](https://img.shields.io/github/actions/workflow/status/nareal/naletter/publish.yml)
+
 This is a [Quarto](https://quarto.org/) extension to provide a PDF letter template. 
 
 ## Installation
@@ -57,7 +59,7 @@ format:
     opening: Dear Helen,
     closing: Best regards,
     spacing: 1.4
-    sansfont: Helvetica #NewsGotT 
+    #sansfont: NewsGotT # Make sure you select a font installed in your system 
     lang: en-GB # pt-PT
     babel-lang: british # portuguese
     #date: Thursday, 18 October 2022
@@ -67,4 +69,4 @@ format:
 
 ## Example 
 
-Here is the source code of the template: [template.qmd](template.qmd) and the [rendered PDF file](https://nareal.github.io/naletter/template.pdf).
+Here is the source code of the template: [template.qmd](template.qmd) and the [rendered PDF file](https://nareal.github.io/naletter/).
